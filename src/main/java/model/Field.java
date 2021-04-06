@@ -7,15 +7,10 @@ public class Field {
     private Piece winner;
     private Piece myPiece;
     private Piece userPiece;
-    private FieldListener listener;
 
     public Field(int size) {
         this.size = size;
         this.field = new Piece[size][size];
-    }
-
-    public void setListener(FieldListener listener) {
-        this.listener = listener;
     }
 
     public void update(int pieceNum) {
@@ -32,7 +27,6 @@ public class Field {
                 makeMove();
             }
         }
-        listener.update(hasEnded());
     }
 
     public void clear() {
@@ -53,11 +47,10 @@ public class Field {
         this.myPiece = Piece.getInversePiece(userPiece);
         if (userPiece == Piece.NOUGHT) {
             makeMove();
-            listener.update(hasEnded());
         }
     }
 
-    private boolean hasEnded() {
+    public boolean hasEnded() {
         return winner != null;
     }
 
@@ -170,6 +163,10 @@ public class Field {
             }
         }
         return Piece.EMPTY;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     private int gameResult(Piece winner) {

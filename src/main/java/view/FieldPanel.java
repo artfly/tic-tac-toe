@@ -12,18 +12,15 @@ public class FieldPanel extends JPanel {
     private static final int LINE_WIDTH = 5;
     private final int fieldSize;
     private String field;
-    private ClickListener listener = null;
 
-    public FieldPanel(int fieldSize) {
+    public FieldPanel(int fieldSize, ClickListener listener) {
         this.fieldSize = fieldSize;
         this.field = new String(new char[fieldSize * fieldSize]).replace('\0', '-');
 
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event) {
-                if (listener != null) {
-                    listener.onSquareClick(squareNum((int) event.getPoint().getX(), (int) event.getPoint().getY()));
-                }
+                listener.onSquareClick(squareNum((int) event.getPoint().getX(), (int) event.getPoint().getY()));
             }
         });
     }
@@ -108,11 +105,4 @@ public class FieldPanel extends JPanel {
         g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1, x + squareWidth() - 1, y + 1);
     }
 
-    public void setClickListener(ClickListener listener) {
-        this.listener = listener;
-    }
-
-    interface ClickListener {
-        void onSquareClick(int squareNum);
-    }
 }
