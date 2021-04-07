@@ -1,6 +1,5 @@
 import model.Field;
-import presenter.TicTacController;
-import view.TicTacFrame;
+import controller.TicTacController;
 
 public class Main {
     private static final int FIELD_SIZE = 3;

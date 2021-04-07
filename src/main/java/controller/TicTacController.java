@@ -1,4 +1,4 @@
-package presenter;
+package controller;
 
 import model.Field;
 import view.ClickListener;
