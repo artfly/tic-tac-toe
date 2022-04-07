@@ -21,7 +21,7 @@ public class TicTacController implements Runnable, ClickListener, NewGameListene
     @Override
     public void newGame() {
         field.clear();
-        frame.redraw(field.toString());
+        frame.update(field.toString());
         String userPiece = frame.addPieceChoice();
         setPieces(userPiece);
     }

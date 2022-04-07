@@ -71,13 +71,9 @@ public class TicTacFrame extends JFrame {
         return PIECE_OPTIONS[choice];
     }
 
-    public void redraw(String field) {
-        fieldPanel.updateField(field);
-        fieldPanel.repaint();
-    }
-
     public void update(String field) {
-        fieldPanel.updateField(field);
+        fieldPanel.setField(field);
+        fieldPanel.repaint();
     }
 
     public void end(String winner) {

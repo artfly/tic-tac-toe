@@ -15,11 +15,17 @@ public class FieldPanel extends JPanel {
 
     public FieldPanel(int fieldSize, ClickListener listener) {
         this.fieldSize = fieldSize;
-        this.field = new String(new char[fieldSize * fieldSize]).replace('\0', '-');
+        this.field = "-".repeat(fieldSize * fieldSize);
 
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event) {
+                listener.onSquareClick(squareNum((int) event.getPoint().getX(), (int) event.getPoint().getY()));
+            }
+
+            // e.g. when touchpad is used
+            @Override
+            public void mousePressed(MouseEvent event) {
                 listener.onSquareClick(squareNum((int) event.getPoint().getX(), (int) event.getPoint().getY()));
             }
         });
@@ -46,35 +52,33 @@ public class FieldPanel extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
                 drawSquare(g, i, j);
             }
         }
-        drawField();
+        drawField((Graphics2D) g);
     }
 
-    public void updateField(String field) {
+    public void setField(String field) {
         this.field = field;
-        drawField();
     }
 
-    private void drawField() {
+    private void drawField(Graphics2D g) {
         int xCenter;
         int yCenter;
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
                 xCenter = squareXCenter(j);
                 yCenter = squareYCenter(i);
-                drawPiece(field.charAt(i + j * fieldSize), xCenter, yCenter);
+                drawPiece(g, field.charAt(i + j * fieldSize), xCenter, yCenter);
             }
         }
     }
 
-    private void drawPiece(char piece, int xCenter, int yCenter) {
-        Graphics2D g = (Graphics2D) getGraphics();
+    private void drawPiece(Graphics2D g, char piece, int xCenter, int yCenter) {
         g.setStroke(new BasicStroke(LINE_WIDTH));
         int xFrom = xCenter - (int) (PIECE_FRACTION * (squareWidth() / 2));
         int xTo = xCenter + (int) (PIECE_FRACTION * (squareWidth() / 2));
@@ -84,15 +88,11 @@ public class FieldPanel extends JPanel {
         int height = (int) (PIECE_FRACTION * squareHeight());
 
         switch (piece) {
-            case 'X':
+            case 'X' -> {
                 g.draw(new Line2D.Double(xFrom, yFrom, xTo, yTo));
                 g.drawLine(xFrom, yTo, xTo, yFrom);
-                break;
-            case 'O':
-                g.drawOval(xFrom, yFrom, width, height);
-                break;
-            default:
-                break;
+            }
+            case 'O' -> g.drawOval(xFrom, yFrom, width, height);
         }
     }
 
