@@ -73,14 +73,15 @@ public class TicTacFrame extends JFrame implements TicTacView, FieldPanel.ClickL
 
     @Override
     public void start(String field) {
-        fieldPanel.updateField(field);
+        fieldPanel.setField(field);
         fieldPanel.repaint();
         addPieceChoice();
     }
 
     @Override
     public void update(String field) {
-        fieldPanel.updateField(field);
+        fieldPanel.setField(field);
+        fieldPanel.repaint();
     }
 
     @Override
