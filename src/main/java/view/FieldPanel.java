@@ -16,7 +16,7 @@ public class FieldPanel extends JPanel {
 
     public FieldPanel(int fieldSize) {
         this.fieldSize = fieldSize;
-        this.field = new String(new char[fieldSize * fieldSize]).replace('\0', '-');
+        this.field = "-".repeat(fieldSize * fieldSize);
 
         this.addMouseListener(new MouseAdapter() {
             @Override
